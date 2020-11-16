@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Accordion from './Components/Accordion';
+import Search from './Components/Search';
+import Dropdown from './Components/Dropdown';
+import Translate from './Components/Translate';
+import Route from './Components/Route';
+import Header from './Components/header';
+const items= [
+  { title: 'What is React?',
+  content: 'react is a frame work'},
+  { title: 'What is Angular?',
+  content: 'Angular is a frame work'},
+  { title: 'What is Node?',
+  content: 'Node is a frame work'},
+  
+];
 
-function App() {
+const options =[
+  { label: 'the color red',
+  value: 'red'},
+  { label: 'the color green',
+  value: 'green'},
+  { label: 'the  shade of blue',
+  value: 'blue'},
+]
+
+
+export default function App() {
+  const [selected, setSelected] = useState(options[0]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <Header/>
+        <Route path = '/'>
+          <Accordion items ={items}/>
+        </Route>
+
+        <Route path = '/translate'>
+          <Translate/>
+        </Route>
+
+        <Route path = '/list'>
+          <Search/>
+        </Route>
+
+        
+        <Route path = '/dropdown'>
+          <Dropdown 
+          label ='Select a color' 
+            colors = {options}
+            selected ={selected}
+            onSelectedChange ={setSelected}
+          />
+          <h1 style= {{color:selected.value }}>This Color is  {selected.value}</h1>
+        </Route>
+        
     </div>
   );
 }
-
-export default App;
